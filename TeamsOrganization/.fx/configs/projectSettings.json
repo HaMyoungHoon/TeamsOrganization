@@ -1,0 +1,28 @@
+{
+    "appName": "TeamsOrganization",
+    "projectId": "60185e6c-5549-4db5-b036-0e3fbcac66c5",
+    "version": "2.1.0",
+    "isFromSample": false,
+    "solutionSettings": {
+        "name": "fx-solution-azure",
+        "version": "1.0.0",
+        "hostType": "Azure",
+        "azureResources": [],
+        "capabilities": [
+            "Tab"
+        ],
+        "activeResourcePlugins": [
+            "fx-resource-frontend-hosting",
+            "fx-resource-identity",
+            "fx-resource-aad-app-for-teams",
+            "fx-resource-local-debug",
+            "fx-resource-appstudio",
+            "fx-resource-cicd"
+        ]
+    },
+    "programmingLanguage": "csharp",
+    "pluginSettings": {
+        "projectFilePath": "D:\\Projects\\VS2022\\Projects\\TeamsOrganization\\TeamsOrganization\\TeamsOrganization.csproj"
+    },
+    "isFirstTimeOpenProject": false
+}

@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "Microsoft Teams (browser)": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "launchUrl": "https://teams.microsoft.com/l/app/ca9ec741-9512-481b-b962-ad7c640baaf4?installAppPackage=true&webjoin=true&appTenantId=c769a7e6-102a-4182-9dfd-c0185bcbec36&login_hint=it_mgr_team@ssipec.com",
+      "applicationUrl": "https://localhost:44302",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "hotReloadProfile": "aspnetcore"
+    },
+    "TeamsOrganization": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:44302",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "hotReloadProfile": "aspnetcore"
+    }
+  }
+}

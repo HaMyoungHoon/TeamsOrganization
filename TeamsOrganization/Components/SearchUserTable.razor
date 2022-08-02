@@ -1,0 +1,93 @@
+﻿@using Microsoft.Graph
+@inject TeamsUserCredential teamsUserCredential
+<div class="search-user-table-container">
+    <input @onchange=KeywordChangeEvent @onkeydown=SearchUser></input>
+    <table>
+        @for (int i = 0; i < _searchUser.Count; i++)
+        {
+            var userBuff = _searchUser[i];
+            <tr class="user-area" @onclick="() => OnSelectSearchUserEvent.InvokeAsync(userBuff)">
+                <td>
+                    <a class="name-area">
+                        @_searchUser[i].DisplayName
+                    </a>
+                    <a class="job-area">
+                        @_searchUser[i].JobTitle
+                    </a>
+                    <br/>
+                    <a class="mail-area">
+                        @_searchUser[i].Mail
+                    </a>
+                    <a class="dept-area">
+                        @GetDept(userBuff)
+                    </a>
+                    <a class="check-area">
+                        @IsSelectUser(userBuff)
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<User> SelectUser { get; set; }
+    [Parameter]
+    public EventCallback<User> OnSelectSearchUserEvent { get; set; }
+    List<User> _searchUser = new();
+    string _searchKeyword = "";
+
+    private void KeywordChangeEvent(ChangeEventArgs e)
+    {
+        _searchKeyword = e.Value.ToString();
+    }
+    private async void SearchUser(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            try
+            {
+                var searchUser = (await GetGraphService().Users.Request().GetAsync()).CurrentPage.ToList();
+                if (_searchKeyword == null || _searchKeyword.Trim().Length <= 0)
+                {
+                    return;
+                }
+
+                _searchUser = searchUser.FindAll(x => x.DisplayName.Contains(_searchKeyword));
+                this.StateHasChanged();
+            }
+            catch
+            {
+                
+            }
+        }
+    }
+    private string GetDept(User user)
+    {
+        if (user.OfficeLocation == null)
+        {
+            return "";
+        }
+
+        var depts = user.OfficeLocation.Split("/");
+
+        return depts.Last();
+    }
+    private string IsSelectUser(User user)
+    {
+        if (SelectUser.Find(x => x.Id == user.Id) != null)
+        {
+            return "[V]";
+        }
+        else
+        {
+            return "";
+        }
+    }
+    
+    private GraphServiceClient GetGraphService()
+    {
+        return new(teamsUserCredential);
+    }
+}

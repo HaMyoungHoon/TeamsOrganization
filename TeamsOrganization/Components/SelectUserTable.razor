@@ -1,0 +1,30 @@
+﻿@using Microsoft.Graph
+
+<div class="select-user-table-container">
+    <table>
+        @for (var i = 0; i < SelectUser.Count; i++)
+        {
+            var userBuff = SelectUser[i];
+            <tr class="user-area" @onclick="() => OnUnSelectUserEvent.InvokeAsync(userBuff)">
+                <td>
+                    <a class="name-area">
+                        @SelectUser[i].DisplayName
+                    </a>
+                    <a class="job-area">
+                        @SelectUser[i].JobTitle
+                    </a>
+                    <a class="mail-area">
+                        @SelectUser[i].Mail
+                    </a>
+                </td>   
+            </tr>
+        }
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public List<User> SelectUser { get; set; }
+    [Parameter]
+    public EventCallback<User> OnUnSelectUserEvent { get; set; }
+}

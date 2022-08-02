@@ -1,0 +1,72 @@
+﻿@using Microsoft.Graph
+@using OrganizationTest.Model
+<div class="user-table-container">
+    <table>
+        <tr>
+            <td>
+                @for (var i = 0; i < UserModel.Count; i++)
+                {
+                    var user = UserModel[i]._user;
+                    var child = UserModel[i]._child;
+                    <a class="dept-area">@UserModel[i]._dept</a>
+                    <table>
+                        @for (var j = 0; j < user.Count; j++)
+                        {
+                            var userBuff = user[j];
+                            <tr>
+                                <td class="user-area" @onclick="() => OnSelectUserEvent.InvokeAsync(userBuff)">
+                                    <a class="name-area">
+                                        @user[j].DisplayName
+                                    </a>
+                                    <a class="job-area">
+                                        @user[j].JobTitle
+                                    </a>
+                                    <a class="mail-area">
+                                        @user[j].Mail
+                                    </a>
+                                    <a>
+                                        @IsSelectUser(userBuff)
+                                    </a>
+                                </td>
+                            </tr>                            
+                        }
+                        <tr>
+                            <td>
+                                <UserTable UserModel="child" SelectedUserModel="SelectedUserModel" IsRoot=false OnSelectUserEvent="SelectUser"/>
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </td>
+            @if (IsRoot)
+            {          
+            }
+        </tr>
+    </table>
+</div>
+@code {
+    [Parameter]
+    public bool IsRoot { get; set; }
+    [Parameter]
+    public List<UserDeptModel> UserModel { get; set; }
+    [Parameter]
+    public EventCallback<User> OnSelectUserEvent { get; set; }
+    [Parameter]
+    public List<User> SelectedUserModel { get; set; }
+
+    private async Task SelectUser(User user)
+    {
+        await OnSelectUserEvent.InvokeAsync(user);
+    }
+    private string IsSelectUser(User user)
+    {
+        if (SelectedUserModel.Find(x => x.Id == user.Id) != null)
+        {
+            return "[V]";
+        }
+        else
+        {
+            return "";
+        }
+    }
+}
